@@ -1,5 +1,38 @@
-<html>
-<body>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Registration result</title>
+</head>
+<body class="text-center">
 <p th:text="#{registration.ok}">registration.ok</p>
+
+
+
+<div class="feedback-table-area">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Arsti nimi</th>
+            <th scope="col">Visiidi kuupäev</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dentistVisitDTO, state : ${dentistVisitDTOs}">
+            <td th:text="${state.count}"></td>
+            <td th:text="${dentistVisitDTO.dantistName}"></td>
+            <td th:text="${dentistVisitDTO.visitTime}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 </body>
+
+
 </html>

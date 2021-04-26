@@ -1,6 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Registration form</title>
+
+
+</head>
 <body>
-<form action="#" th:action="@{/}" th:object="${dentistVisitDTO}" method="post">
+<form action="#" th:action="@{/}" th:object="${newAppointment}" method="post">
     <table>
         <tr>
             <td><p th:text="#{dentist.name}">dentist.name</p></td>
