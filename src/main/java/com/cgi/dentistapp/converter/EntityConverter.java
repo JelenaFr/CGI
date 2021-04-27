@@ -13,7 +13,8 @@ public class EntityConverter {
 
    public  DentistVisitDTO  entityToDto (DentistVisitEntity dentistVisitEntity){
        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO();
-       dentistVisitDTO.setDentistName(dentistVisitEntity.getDoctorName());
+       dentistVisitDTO.setId(dentistVisitEntity.getId());
+       dentistVisitDTO.setDentists(dentistVisitEntity.getDentists());
        dentistVisitDTO.setVisitTime(dentistVisitEntity.getVisitTime());
        return dentistVisitDTO;
    }
@@ -25,7 +26,8 @@ public class EntityConverter {
    }
    public DentistVisitEntity dtoToEntity (DentistVisitDTO dentistVisitDTO) {
        DentistVisitEntity dentistVisitEntity = new DentistVisitEntity();
-       dentistVisitEntity.setDoctorName(dentistVisitDTO.getDentistName());
+       dentistVisitEntity.setId(dentistVisitDTO.getId());
+       dentistVisitEntity.setDentists(dentistVisitDTO.getDentists());
        dentistVisitEntity.setVisitTime(dentistVisitDTO.getVisitTime());
        return dentistVisitEntity;
    }
