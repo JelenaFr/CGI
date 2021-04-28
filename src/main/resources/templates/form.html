@@ -13,7 +13,7 @@
 
         <p th:text="#{register.visit}">register.visit</p>
 
-        <select id="inputDentist" th:field="*{dentists}"  >
+        <select id="inputDentist" th:field="*{dentist}"  >
 
             <option th:each="dentist : ${dentistsAll}"
                     th:text="${dentist.name}"

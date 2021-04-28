@@ -2,6 +2,8 @@ package com.cgi.dentistapp.converter;
 
 import com.cgi.dentistapp.dto.DentistVisitDTO;
 import com.cgi.dentistapp.entity.DentistVisitEntity;
+import com.cgi.dentistapp.repository.DentistNamesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,12 +11,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class EntityConverter {
-
+@Autowired
+    DentistNamesRepository dentistNamesRepository;
 
    public  DentistVisitDTO  entityToDto (DentistVisitEntity dentistVisitEntity){
        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO();
        dentistVisitDTO.setId(dentistVisitEntity.getId());
-       dentistVisitDTO.setDentists(dentistVisitEntity.getDentists());
+       dentistVisitDTO.setDentist(dentistVisitEntity.getDentist());
        dentistVisitDTO.setVisitTime(dentistVisitEntity.getVisitTime());
        return dentistVisitDTO;
    }
@@ -27,7 +30,7 @@ public class EntityConverter {
    public DentistVisitEntity dtoToEntity (DentistVisitDTO dentistVisitDTO) {
        DentistVisitEntity dentistVisitEntity = new DentistVisitEntity();
        dentistVisitEntity.setId(dentistVisitDTO.getId());
-       dentistVisitEntity.setDentists(dentistVisitDTO.getDentists());
+       dentistVisitEntity.setDentist(dentistVisitDTO.getDentist());
        dentistVisitEntity.setVisitTime(dentistVisitDTO.getVisitTime());
        return dentistVisitEntity;
    }

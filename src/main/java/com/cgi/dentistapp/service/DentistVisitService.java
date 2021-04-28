@@ -28,8 +28,8 @@ public class DentistVisitService {
     @Autowired
     private EntityConverter entityConverter;
 
-    public void addVisit(List<Dentist> dentists, Date visitTime) {
-        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentists, visitTime);
+    public void addVisit(Dentist dentist, Date visitTime) {
+        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitTime);
         DentistVisitEntity dentistVisitEntity = entityConverter.dtoToEntity(dentistVisitDTO);
         dentistVisitRepository.save(dentistVisitEntity);
         //TODO implementation

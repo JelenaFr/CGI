@@ -20,9 +20,10 @@ public class DentistVisitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private List<Dentist> dentists;
+    @ManyToOne
+    @JoinColumn(name = "dentist_id")
+    private Dentist dentist;
+
     private Date visitTime;
 
     //TODO implementation

@@ -48,7 +48,7 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         if (bindingResult.hasErrors()) {
             return "form";
         } else
-            dentistVisitService.addVisit(dentistVisitDTO.getDentists(), dentistVisitDTO.getVisitTime());
+            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitTime());
         return "redirect:/results";
     }
     @PostMapping("/results/delete")

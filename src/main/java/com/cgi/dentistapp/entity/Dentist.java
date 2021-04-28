@@ -1,11 +1,9 @@
 package com.cgi.dentistapp.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +16,7 @@ public class Dentist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @OneToMany (mappedBy = "dentist")
+    private List<DentistVisitEntity> visitEntities;
 
 }
