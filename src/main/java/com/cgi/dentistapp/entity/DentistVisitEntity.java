@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,9 +23,13 @@ public class DentistVisitEntity {
     @ManyToOne
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
+    private LocalDate visitDate;
+    @ManyToOne
+    @JoinColumn(name = "availableTime_id")
+    private AvailableTime visitTime;
+    private Boolean isAvailable = true;
 
-    private Date visitTime;
 
-    //TODO implementation
+
 
 }

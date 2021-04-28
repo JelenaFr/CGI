@@ -23,7 +23,17 @@
     </div>
     <div class="mb-3">
         <p th:text="#{visit.date}">visit.date</p>
-        <input type="date" th:field="*{visitTime}" name="calendar"/>
+        <input type="date" th:field="*{visitDate}" name="calendar"/>
+    </div>
+    <p></p>
+    <div class="mb-3">
+    <select id="inputDentist" th:field="*{visitTime}"  >
+
+        <option th:each="availableTime : ${timesAll}"
+                th:text="${availableTime.timePeriod}"
+                th:value="${availableTime.id}">
+        </option>
+    </select>
     </div>
     <p></p>
 

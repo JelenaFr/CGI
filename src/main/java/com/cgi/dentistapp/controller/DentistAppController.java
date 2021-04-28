@@ -32,8 +32,9 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
     @GetMapping("/")
     public String showRegisterForm(Model model) {
         model.addAttribute("dentistsAll", dentistVisitService.loadDentistNames());
+        model.addAttribute("timesAll", dentistVisitService.loadAvailableTimes());
         model.addAttribute("newAppointment", new DentistVisitDTO());
-        model.addAttribute("newAppointment", new DentistVisitDTO());
+
         return "form";
     }
 
@@ -44,11 +45,14 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/")
-    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") DentistVisitDTO dentistVisitDTO, BindingResult bindingResult) {
+    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") DentistVisitDTO dentistVisitDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categoriesAll", dentistVisitService.loadDentistNames());
+            model.addAttribute("timesAll", dentistVisitService.loadAvailableTimes());
+            model.addAttribute("newAppointment", new DentistVisitDTO());
             return "form";
         } else
-            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitTime());
+            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitDate(), dentistVisitDTO.getVisitTime(), false);
         return "redirect:/results";
     }
     @PostMapping("/results/delete")
@@ -58,11 +62,11 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     }
 
-//    @PostMapping("/showFormForUpdate")
-//    public String showFormForUpdate(@RequestParam("visitId") Long id, Model theModel) {
-//        DentistVisitDTO dentistVisitDTO = dentistVisitService.findById(id);
-//        theModel.addAttribute("visit", dentistVisitDTO);
-//        return "results/edit-form";
-//    }
+    @PostMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("visitId") Long id, Model theModel) {
+        DentistVisitDTO dentistVisitDTO = dentistVisitService.findById(id);
+        theModel.addAttribute("visit", dentistVisitDTO);
+        return "results/edit-form";
+    }
 
 }

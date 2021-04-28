@@ -2,8 +2,10 @@ package com.cgi.dentistapp.service;
 
 import com.cgi.dentistapp.converter.EntityConverter;
 import com.cgi.dentistapp.dto.DentistVisitDTO;
+import com.cgi.dentistapp.entity.AvailableTime;
 import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.entity.DentistVisitEntity;
+import com.cgi.dentistapp.repository.AvailableTimesRepository;
 import com.cgi.dentistapp.repository.DentistNamesRepository;
 import com.cgi.dentistapp.repository.DentistVisitRepository;
 import lombok.*;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,13 +27,18 @@ public class DentistVisitService {
     private DentistVisitRepository dentistVisitRepository;
 
     @Autowired
-    private DentistNamesRepository dentistNamesRepository;
+    DentistNamesRepository dentistNamesRepository;
+
+    @Autowired
+    AvailableTimesRepository availableTimesRepository;
+
 
     @Autowired
     private EntityConverter entityConverter;
 
-    public void addVisit(Dentist dentist, Date visitTime) {
-        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitTime);
+    public void addVisit(Dentist dentist, LocalDate visitDate, AvailableTime visitTime, boolean isAvailable) {
+        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitDate, visitTime, false );
+
         DentistVisitEntity dentistVisitEntity = entityConverter.dtoToEntity(dentistVisitDTO);
         dentistVisitRepository.save(dentistVisitEntity);
         //TODO implementation
@@ -55,4 +64,7 @@ public class DentistVisitService {
     }
 
 
+    public List<AvailableTime> loadAvailableTimes() {
+        return availableTimesRepository.findAll();
+    }
 }

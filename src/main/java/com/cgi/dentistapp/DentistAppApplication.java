@@ -1,8 +1,10 @@
 package com.cgi.dentistapp;
 
 import com.cgi.dentistapp.dto.DentistVisitDTO;
+import com.cgi.dentistapp.entity.AvailableTime;
 import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.entity.DentistVisitEntity;
+import com.cgi.dentistapp.repository.AvailableTimesRepository;
 import com.cgi.dentistapp.repository.DentistNamesRepository;
 import com.cgi.dentistapp.repository.DentistVisitRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -34,9 +36,16 @@ public class DentistAppApplication {
 
         return dentistNamesRepository.save(dentist);
     }
+    public AvailableTime createTime(String timePeriod,  AvailableTimesRepository availableTimesRepository) {
+        AvailableTime time = new AvailableTime();
+        time.setTimePeriod(timePeriod);
+
+
+        return availableTimesRepository.save(time);
+    }
 
     @Bean
-    CommandLineRunner runner(DentistNamesRepository dentistNamesRepository) {
+    CommandLineRunner runner(DentistNamesRepository dentistNamesRepository, AvailableTimesRepository availableTimesRepository) {
         return args -> {
             Dentist doctor1 = createDentist("Priit Reedik", dentistNamesRepository);
             Dentist doctor2 = createDentist("Juri Stukolkin", dentistNamesRepository);
@@ -45,13 +54,14 @@ public class DentistAppApplication {
             Dentist doctor5 = createDentist("Mari-Liis Toome", dentistNamesRepository);
             Dentist doctor6 = createDentist("Urve Õim", dentistNamesRepository);
 
-
-//            List<Dentist> categories1 = Arrays.asList(patientsPortal, microsoftSharePoint);
-//            List<Dentist> categories2 = Arrays.asList(registration, doctorsPortal);
-//
-//            dentistVisitRepository.save(new DentistVisitEntity(1L,  doctor1,));
-//            dentistVisitRepository.save(new DentistVisitEntity(2L, "Melania Trump", "trump@gmail.com", categories2, "one more text"));
-
+            AvailableTime time1 = createTime("09:00 - 09:40",  availableTimesRepository);
+            AvailableTime time2 = createTime("10:00 - 10:40",  availableTimesRepository);
+            AvailableTime time3 = createTime("11:00 - 11:40",  availableTimesRepository);
+            AvailableTime time4 = createTime("12:00 - 12:40",  availableTimesRepository);
+            AvailableTime time5 = createTime("13:00 - 13:40",  availableTimesRepository);
+            AvailableTime time6 = createTime("15:00 - 15:40",  availableTimesRepository);
+            AvailableTime time7 = createTime("16:00 - 16:40",  availableTimesRepository);
+            AvailableTime time8 = createTime("17:00 - 17:40",  availableTimesRepository);
         };
     }
 }
