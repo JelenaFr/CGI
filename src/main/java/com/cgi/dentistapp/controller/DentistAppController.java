@@ -1,6 +1,7 @@
 package com.cgi.dentistapp.controller;
 
 import com.cgi.dentistapp.dto.DentistVisitDTO;
+import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.service.DentistVisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @EnableAutoConfiguration
@@ -52,7 +54,7 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
             model.addAttribute("newAppointment", new DentistVisitDTO());
             return "form";
         } else
-            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitDate(), dentistVisitDTO.getVisitTime(), false);
+            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitDate(), dentistVisitDTO.getVisitTime());
         return "redirect:/results";
     }
     @PostMapping("/results/delete")

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.time.LocalDate;
 
 
@@ -23,11 +24,11 @@ public class DentistVisitEntity {
     @ManyToOne
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
-    private LocalDate visitDate;
+    private Date visitDate;
     @ManyToOne
     @JoinColumn(name = "availableTime_id")
     private AvailableTime visitTime;
-    private Boolean isAvailable = true;
+
 
 
 

@@ -29,7 +29,7 @@
         <tr th:each="dentistVisitDTO, state : ${dentistVisitDTOs}">
             <td th:text="${state.count}"></td>
             <td th:text="${dentistVisitDTO.dentist.name}"></td>
-            <td th:text="${dentistVisitDTO.visitDate}"></td>
+            <td th:text="${dentistVisitDTO.visitDate}" ></td>
             <td th:text="${dentistVisitDTO.visitTime.timePeriod}"></td>
 
             <td>

@@ -17,7 +17,7 @@ public class EntityConverter {
         dentistVisitDTO.setDentist(dentistVisitEntity.getDentist());
         dentistVisitDTO.setVisitDate(dentistVisitEntity.getVisitDate());
         dentistVisitDTO.setVisitTime(dentistVisitEntity.getVisitTime());
-        dentistVisitDTO.setIsAvailable(dentistVisitEntity.getIsAvailable());
+
         return dentistVisitDTO;
     }
 
@@ -33,7 +33,7 @@ public class EntityConverter {
         dentistVisitEntity.setDentist(dentistVisitDTO.getDentist());
         dentistVisitEntity.setVisitDate(dentistVisitDTO.getVisitDate());
         dentistVisitEntity.setVisitTime(dentistVisitDTO.getVisitTime());
-        dentistVisitEntity.setIsAvailable (dentistVisitDTO.getIsAvailable());
+
         return dentistVisitEntity;
     }
 

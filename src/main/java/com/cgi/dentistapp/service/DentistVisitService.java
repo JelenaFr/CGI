@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.List;;
 
 @Data
 @Service
@@ -36,8 +37,8 @@ public class DentistVisitService {
     @Autowired
     private EntityConverter entityConverter;
 
-    public void addVisit(Dentist dentist, LocalDate visitDate, AvailableTime visitTime, boolean isAvailable) {
-        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitDate, visitTime, false );
+    public void addVisit(Dentist dentist, Date  visitDate, AvailableTime visitTime) {
+        DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitDate, visitTime );
 
         DentistVisitEntity dentistVisitEntity = entityConverter.dtoToEntity(dentistVisitDTO);
         dentistVisitRepository.save(dentistVisitEntity);
@@ -65,6 +66,12 @@ public class DentistVisitService {
 
 
     public List<AvailableTime> loadAvailableTimes() {
-        return availableTimesRepository.findAll();
+
+        return availableTimesRepository.findAllAvailable();
     }
+
+//    public List<AvailableTime> loadAvailableTimes(Dentist dentist, Date visitDate) {
+//
+//        return availableTimesRepository.findAllAvailable(dentist.getId(), visitDate );
+//    }
 }

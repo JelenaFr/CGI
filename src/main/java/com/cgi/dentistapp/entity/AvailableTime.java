@@ -19,12 +19,12 @@ public class AvailableTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String timePeriod;
-
+    private Boolean isAvailable;
     @OneToMany (mappedBy = "visitTime")
     private List<DentistVisitEntity> visitEntities;
 
-    public AvailableTime(String timePeriod ) {
+    public AvailableTime(String timePeriod, Boolean isAvailable) {
         this.timePeriod = timePeriod;
-
+        this.isAvailable = isAvailable;
     }
 }

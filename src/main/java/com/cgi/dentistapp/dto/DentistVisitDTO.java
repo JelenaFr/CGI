@@ -9,9 +9,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.util.Objects;
 
 
 @AllArgsConstructor
@@ -27,14 +30,20 @@ public class DentistVisitDTO {
     @Temporal(TemporalType.DATE)
 //    @Future(message = "Visit date should be less than current date!!")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate visitDate;
+    //@DateTimeFormat(pattern = "dd.MM.yyyy")
+    private Date visitDate;
     private AvailableTime visitTime;
-    private Boolean isAvailable;
 
-    public DentistVisitDTO(Dentist dentist, LocalDate visitDate, AvailableTime visitTime, boolean isAvailable) {
+
+    public DentistVisitDTO(Dentist dentist, Date visitDate, AvailableTime visitTime) {
         this.dentist = dentist;
         this.visitDate = visitDate;
         this.visitTime = visitTime;
-        this.isAvailable = isAvailable;
+
     }
+
+
 }
+
+//    @DateTimeFormat(pattern = "dd.MM.yyyy")
+//    Date visitTime;

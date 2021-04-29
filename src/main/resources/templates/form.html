@@ -14,7 +14,7 @@
         <p th:text="#{register.visit}">register.visit</p>
 
         <select id="inputDentist" th:field="*{dentist}"  >
-
+            <option value="0" text="Please Select"></option>
             <option th:each="dentist : ${dentistsAll}"
                     th:text="${dentist.name}"
                     th:value="${dentist.id}">
@@ -23,12 +23,12 @@
     </div>
     <div class="mb-3">
         <p th:text="#{visit.date}">visit.date</p>
-        <input type="date" th:field="*{visitDate}" name="calendar"/>
+        <input type="date" th:field="*{visitDate}" name="calendar" />
     </div>
     <p></p>
     <div class="mb-3">
     <select id="inputDentist" th:field="*{visitTime}"  >
-
+        <option value="0" text="Please Select"></option>
         <option th:each="availableTime : ${timesAll}"
                 th:text="${availableTime.timePeriod}"
                 th:value="${availableTime.id}">
