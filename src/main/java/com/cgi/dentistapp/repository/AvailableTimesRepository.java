@@ -12,14 +12,12 @@ import java.util.List;
 public interface AvailableTimesRepository extends JpaRepository<AvailableTime, Long> {
 
 
-    String allAvailable = "SELECT  * FROM AVAILABLE_TIMES RIGHT JOIN   DENTIST_VISIT ON  " +
-            "AVAILABLE_TIMES.ID !=  DENTIST_VISIT.AVAILABLE_time_id WHERE DENTIST_ID = :id and visit_date !=:visit_date";
-    @Query(value = allAvailable, nativeQuery = true)
-    List<AvailableTime> findByDentistAndVisitDate(@Param("id") Long id, @Param("visit_date") String visitDate);
+    String allAvailable2 = "SELECT  AVAILABLE_TIMES FROM available_times RIGHT JOIN dentist_visit ON  " +
+            "available_times.ID !=  dentist_visit.available_time_id WHERE dentist_id = :id and visit_date !=:visitDate";
 
-//    List<AvailableTime> findAllAvailable();
-//
-//    List<AvailableTime>  findByDentistAndVisitDate(Dentist dentist, String visitDate);
+    String allAvailable = "SELECT TIME_PERIOD FROM  available_times JOIN dentist_visit JOIN DENTIST_NAMES  ON dentist_visit.id=DENTIST_NAMES.id  WHERE dentist_id != :idT and visit_date != :visitDate";
+    @Query(value = allAvailable, nativeQuery = true)
+    List<AvailableTime> findByDentistAndVisitDate(@Param("idT") Long id, @Param("visitDate")String visitDate);
 
 
 }

@@ -1,6 +1,8 @@
 package com.cgi.dentistapp.converter;
 
+import com.cgi.dentistapp.dto.AvailableTimeDTO;
 import com.cgi.dentistapp.dto.DentistVisitDTO;
+import com.cgi.dentistapp.entity.AvailableTime;
 import com.cgi.dentistapp.entity.DentistVisitEntity;
 import org.springframework.stereotype.Component;
 
@@ -37,8 +39,36 @@ public class EntityConverter {
         return dentistVisitEntity;
     }
 
-    public List<DentistVisitEntity> dtoToEntity(List<DentistVisitDTO> dentistVisitDTOList) {
-        return dentistVisitDTOList.stream().map(x -> dtoToEntity(x)).collect(Collectors.toList());
+//    public List<DentistVisitEntity> dtoToEntity(List<DentistVisitDTO> dentistVisitDTOList) {
+//        return dentistVisitDTOList.stream().map(x -> dtoToEntity(x)).collect(Collectors.toList());
+//
+//    }
+
+
+    public AvailableTimeDTO entityToDto2(AvailableTime availableTime) {
+        AvailableTimeDTO availableTimeDTO = new AvailableTimeDTO();
+        availableTimeDTO.setId(availableTime.getId());
+        availableTimeDTO.setTimePeriod(availableTime.getTimePeriod());
+        return availableTimeDTO;
+    }
+
+    public List<AvailableTimeDTO> entityToDto2(List<AvailableTime> availableTimeList) {
+        return availableTimeList.stream().map(x -> entityToDto2(x)).collect(Collectors.toList());
+
+
+    }
+
+    public AvailableTime dtoToEntity2(AvailableTimeDTO availableTimeDTO) {
+        AvailableTime availableTime = new AvailableTime();
+        availableTime.setId(availableTimeDTO.getId());
+        availableTime.setTimePeriod(availableTimeDTO.getTimePeriod());
+
+
+        return availableTime;
+    }
+
+    public List<AvailableTime> dtoToEntity(List<AvailableTimeDTO> availableTimeDTOList) {
+        return availableTimeDTOList.stream().map(x -> dtoToEntity2(x)).collect(Collectors.toList());
 
     }
 

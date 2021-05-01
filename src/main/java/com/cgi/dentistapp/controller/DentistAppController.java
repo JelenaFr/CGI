@@ -49,7 +49,7 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dentistsAll", dentistVisitService.loadDentistNames());
-            model.addAttribute("timesAll", dentistVisitService.loadAvailableTimes());
+
             model.addAttribute("newAppointment", new DentistVisitDTO());
             return "form";
         } else
