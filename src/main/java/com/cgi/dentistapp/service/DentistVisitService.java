@@ -37,7 +37,7 @@ public class DentistVisitService {
     @Autowired
     private EntityConverter entityConverter;
 
-    public void addVisit(Dentist dentist, Date  visitDate, AvailableTime visitTime) {
+    public void addVisit(Dentist dentist, String  visitDate, AvailableTime visitTime) {
         DentistVisitDTO dentistVisitDTO = new DentistVisitDTO( dentist, visitDate, visitTime );
 
         DentistVisitEntity dentistVisitEntity = entityConverter.dtoToEntity(dentistVisitDTO);
@@ -67,11 +67,11 @@ public class DentistVisitService {
 
     public List<AvailableTime> loadAvailableTimes() {
 
-        return availableTimesRepository.findAllAvailable();
+        return availableTimesRepository.findAll();
     }
 
-//    public List<AvailableTime> loadAvailableTimes(Dentist dentist, Date visitDate) {
-//
-//        return availableTimesRepository.findAllAvailable(dentist.getId(), visitDate );
-//    }
+    public List<AvailableTime> ajax(Long dentistId, String visitDate) {
+
+        return availableTimesRepository.findByDentistAndVisitDate(dentistId , visitDate);
+    }
 }

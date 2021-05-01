@@ -2,19 +2,13 @@ package com.cgi.dentistapp.dto;
 
 import com.cgi.dentistapp.entity.AvailableTime;
 import com.cgi.dentistapp.entity.Dentist;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Objects;
 
 
 @AllArgsConstructor
@@ -24,26 +18,20 @@ import java.util.Objects;
 public class DentistVisitDTO {
 
     Long id;
+    @NotNull(message = "Palun vali hambaarsti nimi!")
     private Dentist dentist;
-
-//    @NotNull(message = "Please enter visit date")
-    @Temporal(TemporalType.DATE)
-//    @Future(message = "Visit date should be less than current date!!")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    //@DateTimeFormat(pattern = "dd.MM.yyyy")
-    private Date visitDate;
+    @NotEmpty(message = "Palun vali kuupäev!")
+    private String visitDate;
+    @NotNull(message = "Palun vali kellaeeg!")
     private AvailableTime visitTime;
 
 
-    public DentistVisitDTO(Dentist dentist, Date visitDate, AvailableTime visitTime) {
+    public DentistVisitDTO(Dentist dentist, String visitDate, AvailableTime visitTime) {
         this.dentist = dentist;
         this.visitDate = visitDate;
         this.visitTime = visitTime;
 
     }
 
-
 }
 
-//    @DateTimeFormat(pattern = "dd.MM.yyyy")
-//    Date visitTime;

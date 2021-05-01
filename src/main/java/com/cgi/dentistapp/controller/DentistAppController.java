@@ -8,15 +8,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @Controller
 @EnableAutoConfiguration
@@ -46,10 +42,13 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         return "results";
     }
 
+
+
     @PostMapping("/")
     public String postRegisterForm(@Valid @ModelAttribute("newAppointment") DentistVisitDTO dentistVisitDTO, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categoriesAll", dentistVisitService.loadDentistNames());
+            model.addAttribute("dentistsAll", dentistVisitService.loadDentistNames());
             model.addAttribute("timesAll", dentistVisitService.loadAvailableTimes());
             model.addAttribute("newAppointment", new DentistVisitDTO());
             return "form";
@@ -70,5 +69,28 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         theModel.addAttribute("visit", dentistVisitDTO);
         return "results/edit-form";
     }
+
+    @GetMapping ("/dentists/{dentist}/{visitDate}/xxxxx")
+    public String getDetails (@PathVariable ("dentist") String id, @PathVariable("date") String visitDate){
+        String result = id+" "+ visitDate;
+        System.out.println(result);
+        return result;
+
+    }
+
+
+
+//    @CrossOrigin(origins = "/")
+//    @RequestMapping(value = "{dentist}/{visitDate}", method = RequestMethod.GET)
+//    public @ResponseBody
+//    String processAJAXRequest(
+//            @RequestParam("dentist") String dentist,
+//            @RequestParam("visitDate") String visitDate   ) {
+//        String response = "";
+//
+//        System.out.printlntists
+//        ("working");
+//        return response;
+//    }
 
 }

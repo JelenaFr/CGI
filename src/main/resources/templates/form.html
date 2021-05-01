@@ -4,41 +4,89 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <title>Registration form</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+    <style type="text/css">
+        .error {
+            color: red;
+        }
+    </style>
 
 </head>
 <body>
 <form action="#" th:action="@{/}" th:object="${newAppointment}" method="post">
-    <div class="mb-3">
-
+    <div>
         <p th:text="#{register.visit}">register.visit</p>
+        <p></p>
+        <div class="mb-3">
+            <p th:text="#{doctor.name}">doctor.name</p>
+            <select th:id="dentistName" th:field="*{dentist}" tabindex="1" th:autocomplete="off" th:required="required">
+                <option value="">---</option>
+                <option th:each="dentist : ${dentistsAll}"
+                        th:text="${dentist.name}"
+                        th:value="${dentist.id}">
+                </option>
+                <td th:if="${#fields.hasErrors('dentist')}" th:errors="*{dentist}"></td>
+            </select>
 
-        <select id="inputDentist" th:field="*{dentist}"  >
-            <option value="0" text="Please Select"></option>
-            <option th:each="dentist : ${dentistsAll}"
-                    th:text="${dentist.name}"
-                    th:value="${dentist.id}">
-            </option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <p th:text="#{visit.date}">visit.date</p>
-        <input type="date" th:field="*{visitDate}" name="calendar" />
+        </div>
+        <p></p>
+        <div class="mb-3">
+            <p th:text="#{visit.date}">visit.date</p>
+            <input type="text" th:field="*{visitDate}" th:value="*{visitDate}" id="date" tabindex="2" autocomplete="off"
+                   required="required" th:onchange="'getdate()'"/>
+        </div>
     </div>
     <p></p>
     <div class="mb-3">
-    <select id="inputDentist" th:field="*{visitTime}"  >
-        <option value="0" text="Please Select"></option>
-        <option th:each="availableTime : ${timesAll}"
-                th:text="${availableTime.timePeriod}"
-                th:value="${availableTime.id}">
-        </option>
-    </select>
+        <p th:text="#{visit.time}">visit.time</p>
+        <select id="inputTime" th:field="*{visitTime}" tabindex="3" autocomplete="off" th:required="required">
+            <option value="">---</option>
+<!--            <option th:each="availableTime : ${timesAll}"-->
+<!--                    th:text="${availableTime.timePeriod}"-->
+<!--                    th:value="${availableTime.id}">-->
+<!--            </option>-->
+            <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}"></td>
+        </select>
     </div>
     <p></p>
 
     <input type="submit" value="Send"/>
 </form>
+<script>
+    $(function () {
+        $('#date').datepicker({
+            minDate: "+1d",
+            beforeShowDay: $.datepicker.noWeekends,
+            dateFormat: 'dd-mm-yy',
+            firstDay: 1
+        });
+    });
+</script>
 
+
+
+<script>
+
+    function getdate() {
+        let inputDentist = document.getElementById('dentistName');
+        //$("#date").value();
+        let id = inputDentist.options[inputDentist.selectedIndex].value;
+        let inputDate = document.getElementById('date');
+        let visitDate = inputDate.value;
+        console.log(id);
+        console.log(visitDate);
+
+            $.ajax({url: "/dentists/"+id+"/"+visitDate,
+                success: function(result){
+                    console.log(result);
+                   }});
+
+
+
+    }
+</script>
 </body>
 </html>

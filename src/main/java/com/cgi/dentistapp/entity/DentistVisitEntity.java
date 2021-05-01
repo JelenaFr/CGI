@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,7 +25,7 @@ public class DentistVisitEntity {
     @ManyToOne
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
-    private Date visitDate;
+    private String visitDate;
     @ManyToOne
     @JoinColumn(name = "availableTime_id")
     private AvailableTime visitTime;

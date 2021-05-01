@@ -12,6 +12,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +28,14 @@ public class DentistAppApplication {
         SpringApplication.run(DentistAppApplication.class, args);
     }
 
-//    @Override
+
+    //@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(DentistAppApplication.class);
     }
+
+
+
 
     public Dentist createDentist(String name, DentistNamesRepository dentistNamesRepository) {
         Dentist dentist = new Dentist();
