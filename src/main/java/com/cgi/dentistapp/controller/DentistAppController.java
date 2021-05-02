@@ -1,8 +1,8 @@
 package com.cgi.dentistapp.controller;
 
-import com.cgi.dentistapp.dto.DentistVisitDTO;
-import com.cgi.dentistapp.entity.Dentist;
-import com.cgi.dentistapp.service.DentistVisitService;
+import com.cgi.dentistapp.converter.Converter;
+import com.cgi.dentistapp.dto.AppointmentDTO;
+import com.cgi.dentistapp.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,9 @@ import javax.validation.Valid;
 public class DentistAppController extends WebMvcConfigurerAdapter {
 
     @Autowired
-    private DentistVisitService dentistVisitService;
+    private AppointmentService appointmentService;
+    @Autowired
+    private Converter converter;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -29,68 +31,55 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     @GetMapping("/")
     public String showRegisterForm(Model model) {
-        model.addAttribute("dentistsAll", dentistVisitService.loadDentistNames());
-        model.addAttribute("timesAll", dentistVisitService.loadAvailableTimes());
-        model.addAttribute("newAppointment", new DentistVisitDTO());
+        model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
+        model.addAttribute("newAppointment", new AppointmentDTO());
 
         return "form";
     }
 
     @GetMapping("/results")
     public String showResultForm(Model model) {
-        model.addAttribute("dentistVisitDTOs", dentistVisitService.findAllAppointments());
+        model.addAttribute("appointmentDTOs", appointmentService.findAllAppointments());
         return "results";
     }
 
 
-
     @PostMapping("/")
-    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") DentistVisitDTO dentistVisitDTO, BindingResult bindingResult, Model model) {
+    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") AppointmentDTO appointmentDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("dentistsAll", dentistVisitService.loadDentistNames());
-
-            model.addAttribute("newAppointment", new DentistVisitDTO());
+            model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
+            model.addAttribute("newAppointment", new AppointmentDTO());
             return "form";
         } else
-            dentistVisitService.addVisit(dentistVisitDTO.getDentist(), dentistVisitDTO.getVisitDate(), dentistVisitDTO.getVisitTime());
+
+            appointmentDTO.setIsAvailable(false);
+        appointmentService.updateAppointment(converter.dtoToEntity(appointmentDTO));
+
+        //  appointmentService.addAppointment(appointmentDTO.getDentist(), appointmentDTO.getDate(), appointmentDTO.getPeriod());
         return "redirect:/results";
     }
+
     @PostMapping("/results/delete")
     public String delete(@RequestParam("visitId") Long id) {
-        dentistVisitService.deleteVisitById(id);
+        appointmentService.deleteVisitById(id);
         return "redirect:/results";
 
     }
 
     @PostMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("visitId") Long id, Model theModel) {
-        DentistVisitDTO dentistVisitDTO = dentistVisitService.findById(id);
-        theModel.addAttribute("visit", dentistVisitDTO);
+        AppointmentDTO appointmentDTO = appointmentService.findById(id);
+        theModel.addAttribute("visit", appointmentDTO);
         return "results/edit-form";
     }
 
-    @GetMapping ("/dentists/{dentist}/{visitDate}/xxxxx")
-    public String getDetails (@PathVariable ("dentist") String id, @PathVariable("date") String visitDate){
-        String result = id+" "+ visitDate;
+    @GetMapping("/dentists/{dentist}/{visitDate}/xxxxx")
+    public String getDetails(@PathVariable("dentist") String id, @PathVariable("date") String visitDate) {
+        String result = id + " " + visitDate;
         System.out.println(result);
         return result;
 
     }
-
-
-
-//    @CrossOrigin(origins = "/")
-//    @RequestMapping(value = "{dentist}/{visitDate}", method = RequestMethod.GET)
-//    public @ResponseBody
-//    String processAJAXRequest(
-//            @RequestParam("dentist") String dentist,
-//            @RequestParam("visitDate") String visitDate   ) {
-//        String response = "";
-//
-//        System.out.printlntists
-//        ("working");
-//        return response;
-//    }
 
 }

@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DentistNamesRepository extends JpaRepository<Dentist, Long> {
+public interface DentistRepository extends JpaRepository<Dentist, Long> {
+    Dentist findDentistsById (Long id);
 }

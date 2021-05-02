@@ -17,6 +17,6 @@ public class Dentist {
     private Long id;
     private String name;
     @OneToMany (mappedBy = "dentist")
-    private List<DentistVisitEntity> visitEntities;
+    private List<Appointment> visitEntities;
 
 }

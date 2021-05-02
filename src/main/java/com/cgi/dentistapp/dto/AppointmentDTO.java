@@ -1,6 +1,5 @@
 package com.cgi.dentistapp.dto;
 
-import com.cgi.dentistapp.entity.AvailableTime;
 import com.cgi.dentistapp.entity.Dentist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,23 +14,30 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Setter
 @Getter
-public class DentistVisitDTO {
+public class AppointmentDTO {
 
     Long id;
     @NotNull(message = "Palun vali hambaarsti nimi!")
     private Dentist dentist;
     @NotEmpty(message = "Palun vali kuupäev!")
-    private String visitDate;
+    private String date;
     @NotNull(message = "Palun vali kellaeeg!")
-    private AvailableTime visitTime;
+    private String period;
+    private Boolean isAvailable;
 
 
-    public DentistVisitDTO(Dentist dentist, String visitDate, AvailableTime visitTime) {
+    public AppointmentDTO(Dentist dentist, String date, String period) {
         this.dentist = dentist;
-        this.visitDate = visitDate;
-        this.visitTime = visitTime;
+        this.date = date;
+        this.period = period;
 
     }
 
+    public AppointmentDTO(Dentist dentist, String date, String period, Boolean isAvailable) {
+        this.dentist = dentist;
+        this.date = date;
+        this.period = period;
+        this.isAvailable = isAvailable;
+    }
 }
 

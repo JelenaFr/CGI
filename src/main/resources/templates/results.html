@@ -9,9 +9,6 @@
 <p th:text="#{registration.ok}">registration.ok</p>
 
 
-
-
-
 <div class="feedback-table-area">
     <table>
         <thead>
@@ -26,49 +23,38 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dentistVisitDTO, state : ${dentistVisitDTOs}">
+        <tr th:each="appointmentDTO, state : ${appointmentDTOs}">
             <td th:text="${state.count}"></td>
-            <td th:text="${dentistVisitDTO.dentist.name}"></td>
-            <td th:text="${dentistVisitDTO.visitDate}" ></td>
-            <td th:text="${dentistVisitDTO.visitTime.timePeriod}"></td>
+            <td th:text="${appointmentDTO.dentist.name}"></td>
+            <td th:text="${appointmentDTO.date}"></td>
+            <td th:text="${appointmentDTO.period}"></td>
 
             <td>
 
-                    <div>
+                <div>
 
-                        <form action="#" th:action="@{/results/showFormForUpdate}" method="POST">
+                    <form action="#" th:action="@{/results/showFormForUpdate}" method="POST">
 
-                            <input type="hidden" name="visitId" th:value="${dentistVisitDTO.id}" />
-                            <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Update</button>
-
-                        </form>
-                    </div>
-            </td>
-            <td>
-
-                    <form action="#" th:action="@{/results/delete}" method="POST">
-
-                        <input type="hidden" name="visitId" th:value="${dentistVisitDTO.id}" />
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="if (!(confirm('Are you sure you want to delete this appointment?'))) return false">
-                            Delete
-                        </button>
+                        <input type="hidden" name="visitId" th:value="${appointmentDTO.id}"/>
+                        <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Update</button>
 
                     </form>
-
-
-
+                </div>
             </td>
+            <td>
 
+                <form action="#" th:action="@{/results/delete}" method="POST">
 
-
+                    <input type="hidden" name="visitId" th:value="${appointmentDTO.id}"/>
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="if (!(confirm('Are you sure you want to delete this appointment?'))) return false">
+                        Delete
+                    </button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
-
 </div>
-
 </body>
-
-
 </html>
