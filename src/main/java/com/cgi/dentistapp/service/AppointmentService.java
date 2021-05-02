@@ -1,7 +1,5 @@
 package com.cgi.dentistapp.service;
 
-import com.cgi.dentistapp.converter.Converter;
-import com.cgi.dentistapp.dto.AppointmentDTO;
 import com.cgi.dentistapp.entity.Appointment;
 import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.repository.AppointmentRepository;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-;
+
 
 @Data
 @Service
@@ -27,38 +25,28 @@ public class AppointmentService {
     private DentistRepository dentistRepository;
 
 
-
-
-    public void addAppointment(Dentist dentist, String date, String period) {
-        AppointmentDTO appointmentDTO = new AppointmentDTO(dentist, date, period);
-        Appointment appointment = converter.dtoToEntity(appointmentDTO);
-        appointmentRepository.save(appointment);
+    public void addAppointment(Dentist dentist, String date, String period, Boolean isAvailable) {
+        appointmentRepository.save(new Appointment(dentist, date, period, isAvailable));
 
     }
 
-    public void updateAppointment (Appointment appointmentB){
-
-        Appointment appointmentR = appointmentRepository.findAppointmentById(appointmentB.getId());
-        appointmentR.setDate(appointmentB.getDate());
-        appointmentR.setDentist(appointmentB.getDentist());
-        appointmentR.setIsAvailable(appointmentB.getIsAvailable());
-        appointmentR.setPeriod(appointmentB.getPeriod());
-
+    public void updateAppointment(Appointment appointment) {
+        appointment.setIsAvailable(false);
+        appointmentRepository.save(appointment);
     }
 
 
     public Iterable<Appointment> findAllAppointments() {
-        List<Appointment> appointmentList = appointmentRepository.findAppointmentByIsAvailable(false);
-        return appointmentList;
+        return appointmentRepository.findAppointmentByIsAvailable(false);
     }
 
     public void deleteVisitById(Long id) {
-
-        appointmentRepository.delete(id);
+       appointmentRepository.findAppointmentById(id);
+        //appointmentRepository.delete(id);
     }
 
-    public AppointmentDTO findById(Long id) {
-        return converter.entityToDto(appointmentRepository.findOne(id));
+    public Appointment findById(Long id) {
+        return appointmentRepository.findAppointmentById(id);
     }
 
     public List<Dentist> loadDentistNames() {

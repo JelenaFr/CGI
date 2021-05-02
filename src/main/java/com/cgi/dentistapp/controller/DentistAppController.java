@@ -1,7 +1,7 @@
 package com.cgi.dentistapp.controller;
 
-import com.cgi.dentistapp.converter.Converter;
-import com.cgi.dentistapp.dto.AppointmentDTO;
+
+import com.cgi.dentistapp.entity.Appointment;
 import com.cgi.dentistapp.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,8 +20,7 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private Converter converter;
+
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -32,8 +31,7 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
     @GetMapping("/")
     public String showRegisterForm(Model model) {
         model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
-        model.addAttribute("newAppointment", new AppointmentDTO());
-
+        model.addAttribute("newAppointment", new Appointment());
         return "form";
     }
 
@@ -45,18 +43,17 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
 
     @PostMapping("/")
-    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") AppointmentDTO appointmentDTO, BindingResult bindingResult, Model model) {
+    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") Appointment appointment, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
-            model.addAttribute("newAppointment", new AppointmentDTO());
+            model.addAttribute("newAppointment", new Appointment());
             return "form";
         } else
 
-            appointmentDTO.setIsAvailable(false);
-        appointmentService.updateAppointment(converter.dtoToEntity(appointmentDTO));
+            appointmentService.updateAppointment(appointment);
 
-        //  appointmentService.addAppointment(appointmentDTO.getDentist(), appointmentDTO.getDate(), appointmentDTO.getPeriod());
+        //appointmentService.addAppointment(appointmentDTO.getDentist(), appointmentDTO.getDate(), appointmentDTO.getPeriod());
         return "redirect:/results";
     }
 
@@ -69,17 +66,11 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     @PostMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("visitId") Long id, Model theModel) {
-        AppointmentDTO appointmentDTO = appointmentService.findById(id);
-        theModel.addAttribute("visit", appointmentDTO);
+        Appointment appointment = appointmentService.findById(id);
+        theModel.addAttribute("visit", appointment);
         return "results/edit-form";
     }
 
-    @GetMapping("/dentists/{dentist}/{visitDate}/xxxxx")
-    public String getDetails(@PathVariable("dentist") String id, @PathVariable("date") String visitDate) {
-        String result = id + " " + visitDate;
-        System.out.println(result);
-        return result;
 
-    }
 
 }

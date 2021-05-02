@@ -1,6 +1,6 @@
 package com.cgi.dentistapp.controller;
 
-import com.cgi.dentistapp.converter.Converter;
+
 import com.cgi.dentistapp.entity.Appointment;
 import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.repository.AppointmentRepository;
