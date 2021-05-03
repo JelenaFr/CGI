@@ -22,32 +22,33 @@
         <p></p>
         <div class="mb-3">
             <p th:text="#{doctor.name}">doctor.name</p>
-            <select th:id="dentistName" th:field="*{dentist}" tabindex="1" th:autocomplete="off" th:required="required">
+            <select th:id="dentistName" th:field="*{id}" tabindex="1" th:autocomplete="off" th:required="required" th:onchange="'getdate()'">
                 <option value="">---</option>
                 <option th:each="dentist : ${dentistsAll}"
                         th:text="${dentist.name}"
                         th:value="${dentist.id}">
                 </option>
-                <td th:if="${#fields.hasErrors('dentist')}" th:errors="*{dentist}"></td>
+
             </select>
 
         </div>
         <p></p>
         <div class="mb-3">
             <p th:text="#{visit.date}">visit.date</p>
-            <input type="text" th:field="*{date}" th:value="*{date}" id="date" tabindex="2" autocomplete="off"
+            <input type="text" th:field="*{id}" th:value="*{id}" id="date" tabindex="2" autocomplete="off"
                    required="required" th:onchange="'getdate()'"/>
         </div>
     </div>
     <p></p>
     <div class="mb-3">
         <p th:text="#{visit.time}">visit.time</p>
-        <select id="inputTime"  th:field="*{period}" th:value="*{period}" tabindex="3" autocomplete="off" th:required="required">
+        <select id="inputTime"  th:field="*{id}" th:value="*{id}" tabindex="3" autocomplete="off" th:required="required">
         </select>
     </div>
     <p></p>
 
-    <input type="submit" value="Send"/>
+ <input type="submit"  value="Send"/>
+
 </form>
 <script>
     $(function () {
@@ -71,9 +72,12 @@
         let id = inputDentist.options[inputDentist.selectedIndex].value;
         let inputDate = document.getElementById('date');
         let date = inputDate.value;
+        if(!date){
+            return;
+        }
         console.log(id);
         console.log(date);
-
+        $('#inputTime').empty();
         $.ajax({
             url: "/dentists/" + id + "/" + date,
             success: function (result) {
@@ -81,7 +85,7 @@
                 $.each(result, function (i, item) {
 
                     //$('#inputTime').append($('<option value="',  {value: item},'">', {text : item}, '</option>'));
-                    $('#inputTime').append($('<option>', {value: item, text : item}, '</option>'));
+                    $('#inputTime').append($('<option>', {value: item.id, text : item.period}, '</option>'));
                 });
             }
         });

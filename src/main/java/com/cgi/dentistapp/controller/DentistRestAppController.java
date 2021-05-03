@@ -1,19 +1,19 @@
 package com.cgi.dentistapp.controller;
 
 
-import com.cgi.dentistapp.entity.Appointment;
+import com.cgi.dentistapp.dto.AppointmentDto;
 import com.cgi.dentistapp.entity.Dentist;
 import com.cgi.dentistapp.repository.AppointmentRepository;
 import com.cgi.dentistapp.repository.DentistRepository;
 import com.cgi.dentistapp.service.AppointmentService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 
@@ -29,26 +29,19 @@ public class DentistRestAppController {
 
 
     @GetMapping("/dentists/{dentist}/{visitDate}")
-    public List<String> getDetails(@PathVariable("dentist") String id, @PathVariable("visitDate") String date, Model model) {
-        List<String> availableTimes = new ArrayList<>();
-        List<Appointment> appointments = new ArrayList<>();
+    public List<AppointmentDto> getDetails(@PathVariable("dentist") String id, @PathVariable("visitDate") String date) {
+
         Dentist dentist = dentistRepository.findDentistsById(Long.valueOf(id));
-        if (appointmentRepository.findAppointmentByDate(date).isEmpty()) {
-            appointmentService.createSchedule(dentist, date);
-            appointments = appointmentRepository.findAppointmentByDentistNameAndIsAvailableAndDate(dentistRepository.findDentistsById(Long.valueOf(id)).getName(), true, date);
-            appointments.forEach(n -> availableTimes.add(n.getPeriod()));
-            availableTimes.forEach(n -> System.out.println("First " + n));
+        if (appointmentRepository.findAppointmentByDateAndDentist(date, dentist).isEmpty()) {
+            val appointments = appointmentService.createSchedule(dentist, date);
+            return appointments.stream().map(appointment -> new AppointmentDto(appointment.getPeriod(), appointment.getId()))
+                    .collect(Collectors.toList());
 
         } else {
-            appointments = appointmentRepository.findAppointmentByDentistNameAndIsAvailableAndDate(dentistRepository.findDentistsById(Long.valueOf(id)).getName(), true, date);
-            appointments.forEach(n -> availableTimes.add(n.getPeriod()));
-            availableTimes.forEach(n -> System.out.println("First " + n));
+            val appointments = appointmentRepository.findAppointmentByDentistAndIsAvailableAndDate(dentistRepository.findDentistsById(Long.valueOf(id)), true, date);
+            return appointments.stream().map(appointment -> new AppointmentDto(appointment.getPeriod(), appointment.getId()))
+                    .collect(Collectors.toList());
         }
-
-
-        String result = id + " " + date;
-        System.out.println(result);
-        return availableTimes;
 
     }
 

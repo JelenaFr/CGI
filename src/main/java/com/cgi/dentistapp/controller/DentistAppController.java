@@ -43,15 +43,15 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
 
     @PostMapping("/")
-    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") Appointment appointment, BindingResult bindingResult, Model model) {
+    public String postRegisterForm(@Valid @ModelAttribute("newAppointment") AppointmentRequest request, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
-            model.addAttribute("newAppointment", new Appointment());
+            model.addAttribute("newAppointment", new AppointmentRequest());
             return "form";
         } else
 
-            appointmentService.updateAppointment(appointment);
+            appointmentService.updateAppointment(request);
 
         //appointmentService.addAppointment(appointmentDTO.getDentist(), appointmentDTO.getDate(), appointmentDTO.getPeriod());
         return "redirect:/results";
