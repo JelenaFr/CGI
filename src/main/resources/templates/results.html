@@ -28,27 +28,23 @@
             <td th:text="${appointment.dentist.name}"></td>
             <td th:text="${appointment.date}"></td>
             <td th:text="${appointment.period}"></td>
-
             <td>
 
                 <div>
 
-                    <form action="#" th:action="@{/results/showFormForUpdate}" method="POST">
+                    <form action="#" th:action="@{/results/{id}/showFormForUpdate(id=${appointment.id})}" th:object="${appointment}" th:value="${appointment.id}" method="POST">
 
                         <input type="hidden" name="visitId" th:value="${appointment.id}"/>
-                        <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Update</button>
+                        <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Muuta</button>
 
                     </form>
                 </div>
             </td>
             <td>
-                <form action="#" th:action="@{/results/{id}/edit(id=${appointment.id})}" th:object="${appointment}" th:value="${appointment.id}" method="post">
-<!--                <form th:action="@{/results/{id}/edit}" method="POST">-->
-
-<!--                    <input type="hidden" name="id" th:value="${appointment.id}"/>-->
+                <form action="#" th:action="@{/results/{id}/edit(id=${appointment.id})}" th:object="${appointment}" th:value="${appointment.id}" method="POST">
                     <button type="submit"   class="btn btn-danger btn-sm"
                             onclick="if (!(confirm('Are you sure you want to delete this appointment?'))) return false">
-                        Remove registration
+                        Kustuta
                     </button>
                 </form>
             </td>

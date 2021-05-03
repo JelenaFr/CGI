@@ -28,12 +28,12 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     }
 
-//    @GetMapping("/")
-//    public String showRegisterForm(Model model) {
-//        model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
-//        model.addAttribute("newAppointment", new Appointment());
-//        return "form";
-//    }
+    @GetMapping("/")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
+        model.addAttribute("newAppointment", new Appointment());
+        return "form";
+    }
 
     @GetMapping("/results")
     public String showResultForm(Model model) {
@@ -63,12 +63,21 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         return "redirect:/results";
     }
 
-    @PostMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
-        Appointment appointment = appointmentService.findById(id);
+    @PostMapping("/results/{id}/showFormForUpdate")
+    public String showFormForUpdate(Model model, @PathVariable("id") Long id,  @ModelAttribute("appointment") Appointment appointment ) {
+         appointmentService.findById(id);
         model.addAttribute("appointment", appointment);
-        return "results/edit-form";
+        return "/form";
+
+
     }
+
+//    }@PostMapping("/showFormForUpdate")
+//    public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
+//        Appointment appointment = appointmentService.findById(id);
+//        model.addAttribute("appointment", appointment);
+//        return "results/edit-form";
+//    }
 
 
 }
