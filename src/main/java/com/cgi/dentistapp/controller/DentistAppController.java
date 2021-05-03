@@ -8,10 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -31,16 +28,16 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
 
     }
 
-    @GetMapping("/")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
-        model.addAttribute("newAppointment", new Appointment());
-        return "form";
-    }
+//    @GetMapping("/")
+//    public String showRegisterForm(Model model) {
+//        model.addAttribute("dentistsAll", appointmentService.loadDentistNames());
+//        model.addAttribute("newAppointment", new Appointment());
+//        return "form";
+//    }
 
     @GetMapping("/results")
     public String showResultForm(Model model) {
-        model.addAttribute("appointmentDTOs", appointmentService.findAllAppointments());
+        model.addAttribute("appointments", appointmentService.findAllAppointments());
         return "results";
     }
 
@@ -58,17 +55,18 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         return "redirect:/results";
     }
 
-    @PostMapping("/results/delete")
-    public String delete(@RequestParam("visitId") Long id) {
-        appointmentService.deleteVisitById(id);
-        return "redirect:/results";
 
+    @PostMapping("/results/{id}/edit")
+    public String deleteAppointment(Model model, @PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
+        appointmentService.deleteVisitById(id);
+        model.addAttribute("appointment", appointment);
+        return "redirect:/results";
     }
 
     @PostMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("visitId") Long id, Model theModel) {
+    public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
         Appointment appointment = appointmentService.findById(id);
-        theModel.addAttribute("visit", appointment);
+        model.addAttribute("appointment", appointment);
         return "results/edit-form";
     }
 

@@ -44,8 +44,9 @@ public class AppointmentService {
     }
 
     public void deleteVisitById(Long id) {
-        appointmentRepository.findAppointmentById(id);
-        //appointmentRepository.delete(id);
+
+        appointmentRepository.setTrue(id);
+
     }
 
     public Appointment findById(Long id) {
