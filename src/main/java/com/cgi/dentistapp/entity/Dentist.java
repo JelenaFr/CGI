@@ -1,6 +1,9 @@
 package com.cgi.dentistapp.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +19,7 @@ public class Dentist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany (mappedBy = "dentist")
+    @OneToMany(mappedBy = "dentist")
     private List<Appointment> visitEntities;
 
 }

@@ -27,8 +27,8 @@ public class AppointmentService {
     private DentistRepository dentistRepository;
 
 
-    public void addAppointment(Dentist dentist, String date, String period, Boolean isAvailable) {
-        appointmentRepository.save(new Appointment(dentist, date, period, isAvailable));
+    public void save(Appointment appointment) {
+        appointmentRepository.save(appointment);
 
     }
 

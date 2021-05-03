@@ -3,12 +3,16 @@ package com.cgi.dentistapp.controller;
 
 import com.cgi.dentistapp.entity.Appointment;
 import com.cgi.dentistapp.service.AppointmentService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -64,20 +68,12 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/results/{id}/showFormForUpdate")
-    public String showFormForUpdate(Model model, @PathVariable("id") Long id,  @ModelAttribute("appointment") Appointment appointment ) {
-         appointmentService.findById(id);
-        model.addAttribute("appointment", appointment);
-        return "/form";
-
-
+    public String showFormForUpdate(Model model, @PathVariable("id") Long id) {
+        val appointment = appointmentService.findById(id);
+        appointment.setIsAvailable(true);
+        appointmentService.save(appointment);
+        return "redirect:/";
     }
-
-//    }@PostMapping("/showFormForUpdate")
-//    public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
-//        Appointment appointment = appointmentService.findById(id);
-//        model.addAttribute("appointment", appointment);
-//        return "results/edit-form";
-//    }
 
 
 }
