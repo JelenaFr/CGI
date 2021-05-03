@@ -22,7 +22,7 @@
         <p></p>
         <div class="mb-3">
             <p th:text="#{doctor.name}">doctor.name</p>
-            <select th:id="dentistName" th:field="*{id}" tabindex="1" th:autocomplete="off" th:required="required" th:onchange="'getdate()'">
+            <select th:id="dentistName"  tabindex="1" th:autocomplete="off" th:required="required" th:onchange="'getdate()'">
                 <option value="">---</option>
                 <option th:each="dentist : ${dentistsAll}"
                         th:text="${dentist.name}"
@@ -35,7 +35,7 @@
         <p></p>
         <div class="mb-3">
             <p th:text="#{visit.date}">visit.date</p>
-            <input type="text" th:field="*{id}" th:value="*{id}" id="date" tabindex="2" autocomplete="off"
+            <input type="text"  id="date" tabindex="2" autocomplete="off"
                    required="required" th:onchange="'getdate()'"/>
         </div>
     </div>
@@ -83,8 +83,6 @@
             success: function (result) {
                 console.log(result);
                 $.each(result, function (i, item) {
-
-                    //$('#inputTime').append($('<option value="',  {value: item},'">', {text : item}, '</option>'));
                     $('#inputTime').append($('<option>', {value: item.id, text : item.period}, '</option>'));
                 });
             }

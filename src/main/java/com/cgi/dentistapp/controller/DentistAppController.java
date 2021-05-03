@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -52,8 +55,6 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         } else
 
             appointmentService.updateAppointment(request);
-
-        //appointmentService.addAppointment(appointmentDTO.getDentist(), appointmentDTO.getDate(), appointmentDTO.getPeriod());
         return "redirect:/results";
     }
 
@@ -70,7 +71,6 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
         theModel.addAttribute("visit", appointment);
         return "results/edit-form";
     }
-
 
 
 }
