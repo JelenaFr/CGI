@@ -1,0 +1,13 @@
+h3 {
+  color: green;
+}
+table.sortable thead {
+  background-color:#eee;
+  color:#666666;
+  font-weight: bold;
+  cursor: default;
+}
+.form-center {
+  display:flex;
+  justify-content: center;
+}
