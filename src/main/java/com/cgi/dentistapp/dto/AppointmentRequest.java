@@ -1,4 +1,4 @@
-package com.cgi.dentistapp.controller;
+package com.cgi.dentistapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
