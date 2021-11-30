@@ -29,9 +29,6 @@ username "sa"
 jdbc:h2:tcp://localhost:9092/mem:app_db
 
 ## Commands for building the project:
-###### mvn compile
-###### mvn package
-#### To add the project JAR file to the local repository:
 ###### mvn install
 
 ## Run project without using IDE:
