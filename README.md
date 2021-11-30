@@ -35,7 +35,7 @@ jdbc:h2:tcp://localhost:9092/mem:app_db
 ###### mvn install
 
 ## Run project without using IDE:
-###### mvn spring-boot: run
+###### mvn spring-boot:run
 
 ## The application is running on localhost
 ###### http://localhost:8080/
